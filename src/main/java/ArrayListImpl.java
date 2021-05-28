@@ -4,7 +4,7 @@ public class ArrayListImpl<T> extends AbstractList<T>  {
     private final int defaultSize = 4;
     private Object[] array;
     private int size = 0;
-    private int currentsize = 0;
+    private int currentSize = 0;
 
     public ArrayListImpl()
     {
@@ -86,6 +86,7 @@ public class ArrayListImpl<T> extends AbstractList<T>  {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public T get(int index) {
         if(array.length>index)
             return (T)array[index];
@@ -97,12 +98,13 @@ public class ArrayListImpl<T> extends AbstractList<T>  {
         return new Iterator<T>() {
             @Override
             public boolean hasNext() {
-                return currentsize<size;
+                return currentSize<size;
             }
 
             @Override
+            @SuppressWarnings("unchecked")
             public T next() {
-                return (T) array[currentsize++];
+                return (T) array[currentSize++];
             }
         };
     }
