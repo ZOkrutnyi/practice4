@@ -1,8 +1,9 @@
 import java.util.Iterator;
+import java.util.Objects;
 
 public class LinkedListImpl<E> extends AbstractList<E> {
-    private Node<E> head;
-    private Node<E> last;
+    protected Node<E> head;
+    protected Node<E> last;
     private int size;
 
     @Override
@@ -19,27 +20,26 @@ public class LinkedListImpl<E> extends AbstractList<E> {
 
     @Override
     public void add(int index, E item) {
-        if(index < 0 && index > size)
+        if (index < 0 && index > size)
             return;
-        if(index==size)
+        if (index == size)
             add(item);
-        else
-            linkBefore(item, getNode(index));
+        else {
+            linkBefore(item, Objects.requireNonNull(getNode(index)));
+        }
 
     }
+
     private Node<E> getNode(int index) {
         int itr = 0;
-        if(index < 0 && index > size)
-            return null;
-        for(Node<E> n = head;n!=null;n= n.next,itr++)
-        {
-            if(itr==index)
+        for (Node<E> n = head; n != null; n = n.next, itr++) {
+            if (itr == index)
                 return n;
         }
         return null;
     }
-    private void linkBefore(E e, Node<E> bef)
-    {
+
+    private void linkBefore(E e, Node<E> bef) {
         final Node<E> prev = bef.prev;
         final Node<E> newNode = new Node<>(prev, e, bef);
         bef.prev = newNode;
@@ -49,10 +49,11 @@ public class LinkedListImpl<E> extends AbstractList<E> {
             prev.next = newNode;
         size++;
     }
+
     @Override
     public void set(int index, E item) {
         int itr = 0;
-        for (Node<E> n = head; n != null; n = n.next,itr++) {
+        for (Node<E> n = head; n != null; n = n.next, itr++) {
             if (itr == index) {
                 n.data = item;
                 return;
@@ -64,7 +65,7 @@ public class LinkedListImpl<E> extends AbstractList<E> {
     public void remove(Object item) {
         if (item == null) {
             for (Node<E> n = head; n != null; n = n.next) {
-                if (n.data == item) {
+                if (n.data == null) {
                     unlink(n);
                     return;
                 }
@@ -107,7 +108,7 @@ public class LinkedListImpl<E> extends AbstractList<E> {
     public boolean contains(Object item) {
         if (item == null) {
             for (Node<E> n = head; n != null; n = n.next) {
-                if (n.data == item)
+                if (n.data == null)
                     return true;
             }
         } else
@@ -121,11 +122,10 @@ public class LinkedListImpl<E> extends AbstractList<E> {
     @Override
     public E get(int index) {
         int itr = 0;
-        if(index < 0 && index > size)
+        if (index < 0 && index > size)
             return null;
-        for(Node<E> n = head;n!=null;n= n.next,itr++)
-        {
-            if(itr==index)
+        for (Node<E> n = head; n != null; n = n.next, itr++) {
+            if (itr == index)
                 return n.data;
         }
         return null;
@@ -175,7 +175,7 @@ public class LinkedListImpl<E> extends AbstractList<E> {
         size--;
     }
 
-    private static class Node<E> {
+    protected static class Node<E> {
         E data;
         Node<E> next;
         Node<E> prev;
