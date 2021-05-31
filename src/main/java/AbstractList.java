@@ -1,16 +1,16 @@
 
-public abstract class AbstractList<T> implements Iterable<T> {
+public abstract class AbstractList<E> implements Iterable<E> {
 
-    public abstract void add(T item);
-    public abstract void add(int index, T item);
-    public abstract void set(int index, T item);
+    public abstract void add(E item);
+    public abstract void add(int index, E item);
+    public abstract void set(int index, E item);
 
-    public abstract void remove(T item);
+    public abstract void remove(E item);
     public abstract void remove(int index);
 
     public abstract int size();
     public abstract void clear();
 
-    public abstract boolean contains(T item);
-    public abstract T get(int index);
+    public abstract boolean contains(E item);
+    public abstract E get(int index);
 }
