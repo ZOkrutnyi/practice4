@@ -4,7 +4,7 @@ import java.util.Objects;
 public class LinkedListImpl<E> extends AbstractList<E> {
     protected Node<E> head;
     protected Node<E> last;
-    private int size;
+    protected int size;
 
     @Override
     public void add(E item) {
