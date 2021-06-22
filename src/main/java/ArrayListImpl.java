@@ -1,47 +1,49 @@
 import java.util.Iterator;
 
-public class ArrayListImpl<T> extends AbstractList<T>  {
-    private final int defaultSize = 4;
+public class ArrayListImpl<T> extends AbstractList<T> {
+    private static final int DEFAULT_SIZE = 4;
     private Object[] array;
     private int size = 0;
     private int currentSize = 0;
+    private static final int RESIZE_STEP = 2;
 
-    public ArrayListImpl()
-    {
-        array = new Object[defaultSize];
+    public ArrayListImpl() {
+        array = new Object[DEFAULT_SIZE];
     }
-    public ArrayListImpl(int size)
-    {
-        if (size>0)
+
+    public ArrayListImpl(int size) {
+        if (size > 0)
             array = new Object[size];
         else
-            array = new Object[defaultSize];
+            array = new Object[DEFAULT_SIZE];
     }
 
     @Override
     public void add(T item) {
-        if (size == array.length-1)
-            resize(array.length*2);
+        if (size == array.length - 1)
+            resize(array.length * RESIZE_STEP);
         array[size++] = item;
     }
 
     @Override
     public void add(int index, T item) {
-        while (index>array.length-1) {
-            resize(array.length * 2);
+        while (index > array.length - 1) {
+            resize(array.length * RESIZE_STEP);
         }
+        System.arraycopy(array, index, array, index + 1,
+                size - index);
         array[index] = item;
         size++;
     }
 
     @Override
     public void set(int index, T item) {
-        if(index<array.length)
+        if (index < array.length)
             array[index] = item;
     }
 
     @Override
-    public void remove(Object item) {
+    public void remove(T item) {
         if (item == null) {
             for (int index = 0; index < size; index++)
                 if (array[index] == null) {
@@ -70,16 +72,16 @@ public class ArrayListImpl<T> extends AbstractList<T>  {
 
     @Override
     public void clear() {
-        for (int i = 0; i <size ; i++) {
+        for (int i = 0; i < size; i++) {
             array[i] = null;
         }
-        size=0;
+        size = 0;
     }
 
     @Override
-    public boolean contains(Object item) {
-        for (Object t: array) {
-            if(item.equals(t))
+    public boolean contains(T item) {
+        for (Object t : array) {
+            if (item.equals(t))
                 return true;
         }
         return false;
@@ -88,8 +90,8 @@ public class ArrayListImpl<T> extends AbstractList<T>  {
     @Override
     @SuppressWarnings("unchecked")
     public T get(int index) {
-        if(array.length>index)
-            return (T)array[index];
+        if (array.length > index)
+            return (T) array[index];
         return null;
     }
 
@@ -98,7 +100,7 @@ public class ArrayListImpl<T> extends AbstractList<T>  {
         return new Iterator<T>() {
             @Override
             public boolean hasNext() {
-                return currentSize<size;
+                return currentSize < size;
             }
 
             @Override
@@ -108,17 +110,18 @@ public class ArrayListImpl<T> extends AbstractList<T>  {
             }
         };
     }
+
     private void fastRemove(int index) {
         int numMoved = size - index - 1;
         if (numMoved > 0)
-            System.arraycopy(array, index+1, array, index,
+            System.arraycopy(array, index + 1, array, index,
                     numMoved);
         array[--size] = null;
     }
-    private void resize(int newSize)
-    {
+
+    private void resize(int newSize) {
         Object[] newArray = new Object[newSize];
-        System.arraycopy(array,0,newArray,0,size);
+        System.arraycopy(array, 0, newArray, 0, size);
         array = newArray;
     }
 }

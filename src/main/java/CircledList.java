@@ -33,40 +33,7 @@ public class CircledList<E> extends LinkedListImpl<E> implements Iterable<E>{
             super.add(index, item);
     }
 
-    @Override
-    public void set(int index, E item) {
-        super.set(index, item);
-    }
 
-    @Override
-    public void remove(Object item) {
-        super.remove(item);
-    }
-
-    @Override
-    public void remove(int index) {
-        super.remove(index);
-    }
-
-    @Override
-    public int size() {
-        return super.size();
-    }
-
-    @Override
-    public void clear() {
-        super.clear();
-    }
-
-    @Override
-    public boolean contains(Object item) {
-        return super.contains(item);
-    }
-
-    @Override
-    public E get(int index) {
-        return super.get(index);
-    }
 
     @Override
     public Iterator<E> iterator() {
